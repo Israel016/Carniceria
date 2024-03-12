@@ -21,14 +21,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.israelinsano.carniceria"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "492a7087-05f0-4f4e-ba44-19aded382aaa"
+        "projectId": "8797f669-3392-4045-b6d9-964851323a21"
       }
     }
   }
