@@ -10,17 +10,20 @@ const Carrito = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    // Cargar tarjetas almacenadas en AsyncStorage al montar el componente
     loadCardsFromStorage();
   }, []);
 
   useEffect(() => {
+    // Cargar tarjetas almacenadas en AsyncStorage cuando cambie el estado de cards
     loadCardsFromStorage();
-  }, [cards]);
+  }, [cards]); // Agregamos cards como dependencia
 
   const loadCardsFromStorage = async () => {
     try {
       const storedCards = await AsyncStorage.getItem('carrito');
       if (storedCards) {
+        // Si hay tarjetas almacenadas, actualizar el estado
         setCards(JSON.parse(storedCards));
       }
     } catch (error) {
@@ -28,50 +31,37 @@ const Carrito = () => {
     }
   };
 
-  const removeCard = async (index) => {
+  const removeCard = (index) => {
+    // Copia el array actual de tarjetas
     const updatedCards = [...cards];
+    // Elimina la tarjeta según el índice proporcionado
     updatedCards.splice(index, 1);
+    // Actualiza el estado con las tarjetas actualizadas
     setCards(updatedCards);
-    await saveCardsToStorage(updatedCards);
+    // Guarda las tarjetas actualizadas en AsyncStorage
+    saveCardsToStorage(updatedCards);
   };
 
   const saveCardsToStorage = async (updatedCards) => {
     try {
+      // Guarda las tarjetas actualizadas en AsyncStorage
       await AsyncStorage.setItem('carrito', JSON.stringify(updatedCards));
     } catch (error) {
       console.error('Error al guardar tarjetas en AsyncStorage:', error);
     }
   };
 
-  const incrementKilos = (index) => {
-    const updatedCards = [...cards];
-    updatedCards[index].kilos += 1;
-    setCards(updatedCards);
-    saveCardsToStorage(updatedCards);
-  };
-
-  const decrementKilos = (index) => {
-    const updatedCards = [...cards];
-    if (updatedCards[index].kilos > 1) {
-      updatedCards[index].kilos -= 1;
-      setCards(updatedCards);
-      saveCardsToStorage(updatedCards);
-    }
-  };
-
-  const handleCompraDesdeCarrito = () => {
-    navigation.navigate('Pagos', { productosEnCarrito: cards });
-  };
-
+  // Verifica si cards está definido y no está vacío antes de renderizar
   if (!cards || cards.length === 0) {
+    // Puedes mostrar un mensaje o hacer algo en caso de que cards sea undefined o vacío
     return (
       <View style={styles.imgContainer}>
         <Image
           source={require('../../../../../assets/carritoCompras.png')}
           style={{ width: 350, height: 320 }}
         />
-        <Text style={{ fontWeight: 'bold', fontSize: 28, padding: 15 }}>¡Upps!, El carrito de compras está vacío...</Text>
-        <Text style={{ fontSize: 20, marginTop: 10 }}>¡Vamos a llenarlo!</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 28,  padding: 15}}>Upps!, El carrito de compras está vacio...</Text>
+        <Text style={{fontSize: 20, marginTop: 10}}>!Vamos a llenarlo!</Text>
       </View>
     );
   }
@@ -87,31 +77,21 @@ const Carrito = () => {
               <View style={styles.textWrapper}>
                 <View style={styles.titleWrapper}>
                   <Title style={styles.title}>{card.nombre}</Title>
+                  <Paragraph style={styles.paragraph}>31 piezas restantes</Paragraph>
+                </View>
+                <Paragraph style={styles.paragraph1}>{card.descripcion}</Paragraph>
+                <View style={styles.bottomWrapper}>
+                  <Text style={styles.price}>${card.precio}/kg</Text>
                   <TouchableOpacity onPress={() => removeCard(index)}>
                     <Icon name="delete" size={35} color="#A2160F" />
                   </TouchableOpacity>
-                </View>
-                <View style={styles.bottomWrapper}>
-                  <View style={styles.kilosCounter}>
-                    <TouchableOpacity onPress={() => decrementKilos(index)}>
-                      <Icon name="minus" size={25} color="#A2160F" />
-                    </TouchableOpacity>
-                    <Text style={styles.kilosText}>{card.kilos} kg</Text>
-                    <TouchableOpacity onPress={() => incrementKilos(index)}>
-                      <Icon name="plus" size={25} color="#A2160F" />
-                    </TouchableOpacity>
-                  </View>
-                  <Text style={styles.price}>${card.precio}/1kg</Text>
+                  {/* Puedes agregar más elementos según sea necesario */}
                 </View>
               </View>
             </View>
           </Card>
         </TouchableOpacity>
       ))}
-
-      <TouchableOpacity style={styles.comprarButton} onPress={handleCompraDesdeCarrito}>
-        <Text style={styles.comprarButtonText}>Comprar</Text>
-      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -150,7 +130,6 @@ const styles = StyleSheet.create({
   titleWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   title: {
     fontSize: 19,
@@ -176,32 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: '#333',
-    marginRight: 8,
-  },
-  kilosCounter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 5,
-    marginRight: 10,
-  },
-  kilosText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#A2160F',
-    marginHorizontal: 8,
-  },
-  comprarButton: {
-    backgroundColor: '#A2160F',
-    borderRadius: 30,
-    paddingVertical: 14,
-    alignItems: 'center',
-    marginVertical: 16,
-  },
-  comprarButtonText: {
-    color: '#FFF',
-    fontSize: 20,
-    
-
+    marginRight: 120,
   },
 });
 
