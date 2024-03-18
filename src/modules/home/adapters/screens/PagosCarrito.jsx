@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Animated, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Animated, ScrollView, SafeAreaView, Easing, Image } from 'react-native';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -41,16 +41,18 @@ const PagosCarrito = ({ route, navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView contentContainerStyle={styles.scrollView}>
                 <View style={styles.header}>
                     <Text style={styles.title}>Detalles del Pago</Text>
                 </View>
                 {compras.map((compra, index) => (
                     <View key={index} style={styles.compraContainer}>
-                        <Text style={styles.compraTitle}>{compra.nombre} - {compra.kilos} kg</Text>
+                        <Text style={styles.compraTitle}>Llevas: {compra.kilos} kg de {compra.nombre} </Text>
+                        
                         <View style={styles.compraDetailContainer}>
-                            <Text style={styles.compraDetail}>Precio: ${parseFloat(compra.precio).toFixed(2)}/kg</Text>
-                            <Text style={styles.compraDetail}>Tipo de Corte: {compra.tipoCorte} - ${parseFloat(compra.costoTipoCorte).toFixed(2)}</Text>
+                            <Text style={styles.compraDetail}>Precio: ${parseFloat(compra.precio).toFixed(2)}/1kg</Text>
+                            <Text style={styles.compraDetail}>Estilo del Corte: {compra.nombreCorte}</Text>
+                            <Text style={styles.compraDetail}>Precio de Corte: ${parseFloat(compra.costoTipoCorte).toFixed(2)}</Text>
                             <Text style={styles.compraDetail}>Subtotal: ${(parseFloat(compra.precio) * compra.kilos + parseFloat(compra.costoTipoCorte)).toFixed(2)}</Text>
                         </View>
                     </View>
@@ -65,6 +67,7 @@ const PagosCarrito = ({ route, navigation }) => {
 
             <Modal isVisible={isModalVisible} animationIn="fadeIn" animationOut="fadeOut" backdropOpacity={0.5}>
                 <View style={styles.modalContainer}>
+                    <Image source={require('../../../../../assets/logo.png')} style={styles.modalImage} />
                     <Text style={styles.modalTitle}>¡Pago Realizado!</Text>
                     <Text style={styles.modalText}>Gracias por tu compra.</Text>
                 </View>
@@ -76,85 +79,89 @@ const PagosCarrito = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f4f4f4',
+        backgroundColor: '#FFF',
     },
     scrollView: {
-        marginHorizontal: 10,
+        flexGrow: 1,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
     },
     header: {
-        marginTop: 20,
+        alignItems: 'center',
         marginBottom: 20,
     },
     title: {
-        fontSize: 22,
-        fontWeight: '600',
-        color: '#333',
-        textAlign: 'center',
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#A2160F',
     },
     compraContainer: {
-        backgroundColor: '#ffffff',
-        padding: 15,
-        borderRadius: 8,
-        marginBottom: 15,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        backgroundColor: '#F9F9F9',
+        padding: 20,
+        borderRadius: 10,
+        marginBottom: 20,
         elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
     },
     compraTitle: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 5,
-        color: '#444',
+        color: '#A2160F',
     },
-    compraDetailContainer: {
-        borderTopColor: '#eee',
-        borderTopWidth: 1,
-        marginTop: 10,
-        paddingTop: 10,
-    },
+    compraDetailContainer: {},
     compraDetail: {
         fontSize: 16,
         marginBottom: 5,
-        color: '#555',
+        color: '#555555',
     },
     totalContainer: {
-        marginTop: 10,
-        padding: 15,
+        paddingVertical: 20,
         alignItems: 'flex-end',
     },
     total: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: 'bold',
-        color: '#444',
+        color: '#A2160F',
     },
     confirmButton: {
-        backgroundColor: '#00a680',
-        paddingVertical: 12,
-        borderRadius: 8,
+        backgroundColor: '#A2160F',
+        paddingVertical: 10,
+        borderRadius: 30,
         alignItems: 'center',
-        marginVertical: 20,
+        marginTop: 20,
+        marginBottom: 30,
     },
     confirmButtonText: {
-        color: '#ffffff',
+        color: '#FFFFFF',
         fontSize: 18,
-        fontWeight: '600',
     },
     modalContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: '#FFF',
         padding: 20,
-        borderRadius: 8,
+        borderRadius: 10,
         alignItems: 'center',
     },
+    modalImage: {
+        width: 150,
+        height: 150,
+        marginBottom: 20,
+    },
     modalTitle: {
-        fontSize: 22,
-        fontWeight: '600',
+        fontSize: 24,
+        fontWeight: 'bold',
         marginBottom: 10,
+        color: '#A2160F',
     },
     modalText: {
         fontSize: 18,
-        color: '#555',
+        color: '#555555',
         textAlign: 'center',
     },
 });

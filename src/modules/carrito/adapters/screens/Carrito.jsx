@@ -79,7 +79,7 @@ const Carrito = () => {
   const handleTipoCorteSelect = (tipoCorte, costo) => {
     const updatedCards = cards.map((card, i) => {
       if (i === indexCorte) {
-        return { ...card, tipoCorteSeleccionado: tipoCorte, costoTipoCorte: costo };
+        return { ...card, tipoCorteSeleccionado: tipoCorte, costoTipoCorte: costo, nombreCorte: tipoCorte};
       }
       return card;
     });
@@ -87,6 +87,9 @@ const Carrito = () => {
     setCards(updatedCards);
     handleCloseModal();
   };
+
+
+  
 
   const tiposCorte = [
     { nombre: 'Sin corte', costo: 0 },
@@ -255,14 +258,13 @@ const styles = StyleSheet.create({
   },
   payButton: {
     backgroundColor: '#A2160F',
-    padding: 15,
-    borderRadius: 25,
+    padding: 10,
+    borderRadius: 30,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 25,
   },
   payButtonText: {
     color: '#ffffff',
-    fontWeight: 'bold',
     fontSize: 18,
   },
   modalContainer: {

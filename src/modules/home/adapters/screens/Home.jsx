@@ -142,7 +142,7 @@ const Home = () => {
                 <View style={styles.bottomWrapper}>
                   <Text style={styles.price}>${card.precio}/1kg</Text>
                   <Icon
-                    name="heart"
+                    name="heart-outline"
                     size={35}
                     color="#A2160F"
                     onPress={() => handleCardPress3(card)}
