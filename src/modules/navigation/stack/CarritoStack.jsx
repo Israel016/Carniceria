@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import Carrito from "../../carrito/adapters/screens/Carrito"; 
 import Pagos from "../../home/adapters/screens/Pagos";
 import Carnes from "../../home/adapters/screens/Carnes";
+import PagosCarrito from "../../home/adapters/screens/PagosCarrito";
 
 
 const Stack = createStackNavigator();
@@ -28,6 +29,15 @@ export default function CarritoStack() {
           headerTitleStyle: styles.headerTitle,
         }}
         component={Pagos}
+      />
+      <Stack.Screen
+        name="PagosCarrito"
+        options={{
+          title: "Pagar Carrito",
+          headerStyle: styles.header,
+          headerTitleStyle: styles.headerTitle,
+        }}
+        component={PagosCarrito}
       />
       <Stack.Screen
         name="Carnes"

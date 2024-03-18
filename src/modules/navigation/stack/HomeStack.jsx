@@ -53,7 +53,7 @@ export default function HomeStack() {
       <Stack.Screen
         name="Favorites"
         options={{
-          title: "Favorites",
+          title: "Favoritos",
           headerStyle: styles.header,
           headerTitleStyle: styles.headerTitle,
         }}
