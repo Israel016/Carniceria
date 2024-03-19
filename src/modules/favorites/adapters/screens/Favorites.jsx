@@ -60,7 +60,7 @@ const Favorites = () => {
           source={require('../../../../../assets/favoritos.png')}
           style={{ width: 370, height: 330 }}
         />
-        <Text style={{fontWeight: 'bold', fontSize: 28,  padding: 16}}>Upps!, Aun no hay producto guardados...</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 28,  padding: 16}}>Upps!, Aun no hay productos favoritos...</Text>
         <Text style={{fontSize: 20, marginTop: 2}}>!Vamos a buscarlos!</Text>
       </View>
     );
