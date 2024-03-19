@@ -31,9 +31,15 @@ const PagosCarrito = ({ route, navigation }) => {
         }
     
         setTimeout(() => {
-            navigation.navigate('Carrito', { shouldRefresh: true });
+            if (navigation) {
+                navigation.navigate('Carrito', { shouldRefresh: true });
+            } else {
+                console.error('Error: El objeto de navegación no está definido.');
+                // Puedes manejar este caso de error de manera adecuada, según tus requisitos.
+            }
         }, 2000);
     };
+    
     
     const calculateTotal = () => {
         return compras.reduce((total, item) => total + (item.precio * item.kilos) + item.costoTipoCorte, 0);

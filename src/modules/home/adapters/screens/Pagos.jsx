@@ -11,29 +11,28 @@ const Pagos = ({ route, navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
-  const toggleModal = () => {
+  const toggleModal = (navigation) => {
     Animated.timing(fadeAnim, {
       toValue: isModalVisible ? 0 : 1,
-      duration: 200,
+      duration: 400,
       easing: Easing.linear,
       useNativeDriver: true,
     }).start(() => {
       setModalVisible(!isModalVisible); // Cambiar el estado después de completar la animación
+      // Navegar a la pantalla Home después de completar la animación
+      if (!isModalVisible) {
+        navigation.navigate('Home');
+      }
     });
   };
-  
 
   const handleConfirmarPago = () => {
     console.log('Pago confirmado');
 
     // Mostrar el modal "Pago Realizado"
-    toggleModal();
-
-    // Navegar a la pantalla Home después de 2 segundos
-    setTimeout(() => {
-      navigation.navigate('Home');
-    }, 2000);
+    toggleModal(navigation);
   };
+
 
   return (
     <View style={styles.container}>
@@ -61,6 +60,7 @@ const Pagos = ({ route, navigation }) => {
           <Text style={styles.modalText}>Gracias por tu compra.</Text>
         </Animated.View>
       </Modal>
+
     </View>
   );
 };

@@ -1,10 +1,11 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack"; 
+import { createStackNavigator } from "@react-navigation/stack";
 import { View, Text, StyleSheet } from "react-native";
-import Carrito from "../../carrito/adapters/screens/Carrito"; 
+import Carrito from "../../carrito/adapters/screens/Carrito";
 import Pagos from "../../home/adapters/screens/Pagos";
 import Carnes from "../../home/adapters/screens/Carnes";
 import PagosCarrito from "../../home/adapters/screens/PagosCarrito";
+import Home from "../../home/adapters/screens/Home";
 
 
 const Stack = createStackNavigator();
@@ -48,7 +49,20 @@ export default function CarritoStack() {
         }}
         component={Carnes}
       />
+      <Stack.Screen
+        name="Home"
+        options={{
+          title: "Home",
+          headerStyle: styles.header,
+          headerTitleStyle: styles.headerTitle,
+        }}
+      >
+        {({ route }) => <Home route={route} />}
+      </Stack.Screen>
+      
+
     </Stack.Navigator>
+
   );
 }
 
